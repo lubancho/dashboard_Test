@@ -1,0 +1,292 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Давидян и партнёры. Адаптация и увольнение</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<style>
+/* Layout: шапка со счётчиками-фильтрами, вкладки Обзор / Решения / Задачи / Проверка / Файлы; детали раскрываются по клику */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --surface2:#e9edf1; --fg:#17212b; --muted:#5a6773; --line:#d5dce3;
+  --accent:#1f4fd8; --on-accent:#ffffff; --accent-soft:#e3eafc;
+  --ok:#16794c; --ok-soft:#dff3e9; --warn:#9a5b00; --warn-soft:#fbecd0; --bad:#b3261e; --bad-soft:#fbe0dd;
+  --f-display:'Source Serif 4',Georgia,serif; --f-body:'IBM Plex Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10161c; --surface:#18212a; --surface2:#212c37; --fg:#e6ebf0; --muted:#97a4b1; --line:#2b3745;
+  --accent:#7fa2ff; --on-accent:#0b1220; --accent-soft:#1e2d52;
+  --ok:#5cd39a; --ok-soft:#173a2b; --warn:#f0b955; --warn-soft:#3b2d12; --bad:#ff8a80; --bad-soft:#44201d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161c; --surface:#18212a; --surface2:#212c37; --fg:#e6ebf0; --muted:#97a4b1; --line:#2b3745;
+  --accent:#7fa2ff; --on-accent:#0b1220; --accent-soft:#1e2d52;
+  --ok:#5cd39a; --ok-soft:#173a2b; --warn:#f0b955; --warn-soft:#3b2d12; --bad:#ff8a80; --bad-soft:#44201d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:24px 48px}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;margin:0;text-wrap:balance}
+h1{font-size:26px;line-height:1.2} h2{font-size:18px} h3{font-size:15px}
+p{margin:0}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.muted{color:var(--muted);font-size:13px}
+.pill{display:inline-block;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:500;white-space:nowrap}
+.ok{background:var(--ok-soft);color:var(--ok)} .warn{background:var(--warn-soft);color:var(--warn)} .bad{background:var(--bad-soft);color:var(--bad)} .info{background:var(--accent-soft);color:var(--accent)}
+header{display:flex;flex-direction:column;gap:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.kpi b{font-size:24px;font-family:var(--f-display);line-height:1.1}
+.kpi span{font-size:13px;color:var(--muted)}
+.kpi.bad b{color:var(--bad)} .kpi.warn b{color:var(--warn)} .kpi.ok b{color:var(--ok)}
+.kpi:hover{border-color:var(--accent)}
+nav{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line)}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:8px 12px;font-weight:500;color:var(--muted)}
+nav button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.view{display:flex;flex-direction:column;gap:12px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;min-width:0}
+.pad{padding:14px 16px}
+.next{border-left:4px solid var(--bad)}
+.next ol{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px}
+.step{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--line);border-radius:6px;padding:8px 10px;text-align:left;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.step.ok{border-top-color:var(--ok);background:var(--surface)} .step.warn{border-top-color:var(--warn);background:var(--surface)} .step.idle{border-top-color:var(--line)}
+.step[aria-pressed="true"]{border-color:var(--accent);border-top-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.item{border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item>button{width:100%;text-align:left;background:none;border:0;padding:11px 14px;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.item>button:hover{background:var(--surface2)}
+.item .t{flex:1;min-width:0}
+.item .arrow{color:var(--muted);transition:transform .15s}
+.item[data-open="true"] .arrow{transform:rotate(90deg)}
+.detail{padding:2px 14px 14px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.detail .q{border-left:3px solid var(--line);padding-left:10px;color:var(--muted)}
+.task{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-bottom:1px solid var(--line)}
+.task:last-child{border-bottom:0}
+.task input{margin-top:4px;width:16px;height:16px;flex:none}
+.task label{flex:1;min-width:0;cursor:pointer}
+.task.done label{text-decoration:line-through;color:var(--muted)}
+.who{font-size:12px;color:var(--muted)}
+.files{list-style:none;margin:0;padding:0}
+.files li{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:1px;overflow-wrap:anywhere}
+.files li:last-child{border-bottom:0}
+@media (prefers-reduced-motion:reduce){.item .arrow{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Давидян и партнёры: найм, адаптация, увольнение</h1>
+  <p class="muted">Статус на 6 октября 2026. Нажимайте на карточки, этапы и строки, чтобы увидеть подробности.</p>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<nav role="tablist" id="nav">
+  <button role="tab" data-v="v-over" aria-selected="true">Обзор</button>
+  <button role="tab" data-v="v-dec" aria-selected="false">Решения</button>
+  <button role="tab" data-v="v-task" aria-selected="false">Задачи</button>
+  <button role="tab" data-v="v-chk" aria-selected="false">Проверка</button>
+  <button role="tab" data-v="v-files" aria-selected="false">Файлы</button>
+</nav>
+
+<div class="view" id="v-over">
+  <div class="panel pad next">
+    <h2>Что сделать вам сейчас</h2>
+    <ol>
+      <li>Отправить Юрию итог Zoom 29.09 и три вопроса. Замените в тексте «после сегодняшнего Zoom» на «после Zoom 29 сентября».</li>
+      <li>Отправить Светлане запрос на сверку. Приложите только её чек-лист.</li>
+      <li>В общий чат юристов пока не писать: нет даты и состава зума со старшими.</li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Тексты готовы в файле «Сообщения после Zoom 29.09» (вкладка «Файлы»).</p>
+  </div>
+  <h2>Этапы работ</h2>
+  <div class="steps" id="steps"></div>
+  <div class="panel pad" id="step-detail" aria-live="polite"></div>
+</div>
+
+<div class="view" id="v-dec" hidden>
+  <div class="chips" id="dec-chips"></div>
+  <div class="panel" id="dec-list"></div>
+</div>
+
+<div class="view" id="v-task" hidden>
+  <div class="chips" id="task-chips"></div>
+  <p class="muted">Сроки на встречах не называли. Отметки хранятся только в вашем браузере.</p>
+  <div class="panel" id="task-list"></div>
+</div>
+
+<div class="view" id="v-chk" hidden>
+  <p class="muted">Места, где черновик говорит увереннее, чем записи встреч. Нажмите, чтобы увидеть основание и что делать.</p>
+  <div class="panel" id="chk-list"></div>
+</div>
+
+<div class="view" id="v-files" hidden>
+  <div class="panel"><ul class="files" id="file-list"></ul></div>
+  <p class="muted">Файлы лежат дважды: в корне и внутри 00_ИТОГ. Я ничего не удалял, лишние копии удалите вручную.</p>
+</div>
+</div>
+
+<script>
+(function(){
+var D=[
+ {t:"Подход: сначала интервью, потом регламенты",s:"ok",w:"Решено",d:"Групповой Zoom со старшими юристами, отдельно Светлана, затем Юрий. Регламенты оформляются по итогам интервью.",src:"Переписка 28.09; Zoom 28.09"},
+ {t:"Адаптация: 3 месяца испытательный и 3 месяца самостоятельной работы",s:"ok",w:"Решено",d:"Юрий описал модель сам. После каждого этапа решает он, опираясь на отзывы старших юристов.",src:"Zoom 29.09, 32:00–34:30"},
+ {t:"Порядок передачи дел при увольнении",s:"ok",w:"Решено",d:"Юрий сообщает старшему юристу; тот с сотрудником составляет таблицу дел и дат; дела распределяются; часы вносятся в Jeffit; забираются ключи и доверенности.",src:"Zoom 29.09, 41:00–45:30"},
+ {t:"Claude для новичка",s:"ok",w:"Решено",d:"Нужен ли Claude, решает Юрий. Настраивает Дмитрий.",src:"Zoom 29.09, 26:00 и 29:55"},
+ {t:"Не повышать тариф Claude всем сразу",s:"ok",w:"Решено",d:"Сначала анализ реального расхода лимитов. Юрий согласился.",src:"Zoom 28.09, 05:57"},
+ {t:"Срок отключения доступов уволенного",s:"warn",w:"Только мнение",d:"Юрий сказал «думаю, в течение месяца» и раньше «надо подумать, не могу сказать точно». В черновике это стало правилом «не позже 30 дней».",src:"Zoom 29.09, 42:06 и 43:20"},
+ {t:"Формат базы знаний: NotebookLM, тесты, видео",s:"warn",w:"Обсуждали",d:"Юрий: «можно уже начать». Решения нет, сначала нужны утверждённые тексты.",src:"Zoom 28.09, 06:05–07:20"},
+ {t:"Кто отвечает за адаптацию и базу знаний",s:"bad",w:"Не решено",d:"Юрий отложил вопрос на 29.09. На 29.09 к нему не вернулись. Новый кандидат в помощники исключён, пока не принят.",src:"Zoom 28.09, 24:30–25:15"},
+ {t:"Критерии перехода между этапами",s:"bad",w:"Не решено",d:"Сейчас это личная оценка Юрия по отзывам. Чек-лист предлагал Дмитрий, договорённости нет.",src:"Zoom 28.09; Zoom 29.09, 13:20"},
+ {t:"Кто отменяет доверенности клиентов при увольнении",s:"bad",w:"Не решено",d:"Вопрос задал Claude. Ответ в записи не разобрать.",src:"Zoom 29.09, 46:30"}
+];
+var T=[
+ {id:"t1",t:"Отправить Юрию итог и три вопроса",who:"Дмитрий",st:"Просрочено на неделю",s:"bad"},
+ {id:"t2",t:"Отправить Светлане запрос на сверку организационной части",who:"Дмитрий",st:"Не начато",s:"warn"},
+ {id:"t3",t:"Назвать владельца адаптации и базы знаний",who:"Юрий",st:"Ждём Юрия",s:"warn"},
+ {id:"t4",t:"Назвать срок отключения доступов уволенного",who:"Юрий",st:"Ждём Юрия",s:"warn"},
+ {id:"t5",t:"Назначить дату и состав зума со старшими юристами",who:"Юрий",st:"Ждём Юрия",s:"warn"},
+ {id:"t6",t:"Проверить чек-лист, документы при приёме и увольнении, найти оригиналы PDF и выгрузку «важных» сообщений",who:"Светлана",st:"Не запрошено",s:"warn"},
+ {id:"t7",t:"Зум со старшими: ошибки новичков, критерии готовности, таблица дел, часы в Jeffit",who:"Дмитрий и старшие юристы",st:"Ждёт даты",s:"warn"},
+ {id:"t8",t:"Интервью с недавно принятой сотрудницей (предложил Юрий)",who:"Дмитрий",st:"Не начато",s:"warn"},
+ {id:"t9",t:"Достать из аккаунта Юрия переписку с Claude, где заполнялся черновик",who:"Дмитрий",st:"Не начато",s:"warn"},
+ {id:"t10",t:"Собрать версию 1.0: подтверждённое отдельно от гипотез",who:"Дмитрий",st:"После сверок",s:"warn"},
+ {id:"t11",t:"Анонимизация: ответы 7 провайдеров, таблица сравнения, проверка договора в бюро",who:"Дмитрий, затем Юрий",st:"Ждём провайдеров",s:"warn"},
+ {id:"t12",t:"Лимиты Claude: анализ у Филиппа, Татьяны, Никиты Куприянова",who:"Дмитрий",st:"Нужен статус",s:"warn"},
+ {id:"t13",t:"Проверить, оплачен ли счёт, отправленный Юрием 28.09",who:"Дмитрий",st:"Проверить",s:"info"}
+];
+var C=[
+ {t:"«Юрий проверил и подтвердил содержание»",s:"bad",w:"Важно",d:"Так написано в самом черновике. В записи Юрий отвечает на вопросы Claude, итоговый текст не читает: около 50-й минуты приходит клиент.",do:"Считать черновик версией «со слов Юрия» и показать ему целиком."},
+ {t:"Правило «30 дней» и «напоминание на +30 дней»",s:"bad",w:"Важно",d:"Юрий называл срок «в течение месяца» как мнение. Про напоминание в записи ничего нет, его предложил Claude.",do:"Не переносить в регламент без ответа Юрия."},
+ {t:"Суммы и фамилии в «Пакете новичка»",s:"bad",w:"Важно",d:"Премии и штрафы (1500, 2000, 250, 150, 100 ₽), ставки (ЮО 1500, АО 1050 ₽) и закрепление клиентов за людьми есть только в черновике. В транскриптах названы лишь «2018–2019», «премии, штрафы, ставки» без цифр. Скриншотов в папке нет.",do:"Запросить оригиналы PDF и сверить цифры."},
+ {t:"Доступы: до выхода или через 3 месяца",s:"warn",w:"Противоречие",d:"На 22–23 мин Юрий говорит создать Jeffit и почту до выхода, на 32–35 мин что первые три месяца доступов нет. Черновик взял второе.",do:"Уточнить: как новичок общается с клиентами без рабочей почты."},
+ {t:"Запись Zoom 29.09 плохого качества",s:"warn",w:"Пробел",d:"Это автосубтитры с ошибками. Фрагмент 40–49 мин (увольнение, доверенности) почти не читается. Настоящий источник ответов Юрия — чат в его аккаунте Claude.",do:"Выгрузить этот чат и сверить с черновиком."},
+ {t:"Вопрос о владельце базы знаний не обсуждали",s:"warn",w:"Пробел",d:"28.09 сказано, что 29.09 начнём с него. Встреча сразу ушла в заполнение регламента.",do:"Поставить первым вопросом в письме Юрию."},
+ {t:"Название системы «Jeffit»",s:"idle",w:"Мелочь",d:"В записях встречаются «джеффит», «JFT», «джейфти». Написание в черновике не подтверждено.",do:"Уточнить у Светланы."}
+];
+var S=[
+ {n:"Сбор практики",s:"ok",w:"Сделано",d:"Два Zoom с Юрием 28 и 29 сентября. Собраны роли, этапы адаптации, порядок увольнения."},
+ {n:"Черновик регламента",s:"warn",w:"Не проверен",d:"Собран в Claude Юрия со слов Юрия. Подтверждение Юрия и ряд пунктов см. вкладку «Проверка»."},
+ {n:"Сверка со Светланой",s:"idle",w:"Не начато",d:"Организационная часть: техника, ключи, документы, бухгалтер, первый день. Сообщение готово, не отправлено."},
+ {n:"Зум со старшими",s:"idle",w:"Не назначен",d:"Нужны дата и состав от Юрия. Пятничный зум не подходит: на нём бывает 40–50% группы и есть младшие юристы."},
+ {n:"Версия 1.0",s:"idle",w:"Ждёт",d:"Собирается после двух сверок: подтверждённые правила отдельно от гипотез."},
+ {n:"Тест на реальном найме",s:"idle",w:"Ждёт",d:"Ближайший найм не определён. Помощник 17 лет приходит на общественных началах и в процесс не входит."}
+];
+var F=[
+ ["Папка проекта","https://drive.google.com/drive/folders/1_Ju4krys4qmiAnqICFc46IvXai61H27B","корень: 00_ИТОГ, 01_ИСХОДНИКИ, 02_РАБОЧИЕ_МАТЕРИАЛЫ"],
+ ["Сообщения после Zoom 29.09","https://docs.google.com/document/d/1PH0f3xtcHSDyO5iDATD4Fv2fZJSS6UY6g0JMc51q-Vk/edit","тексты Юрию, Светлане и в общий чат"],
+ ["00_ИТОГ: сводка и риски","https://docs.google.com/document/d/1v3bjNeepJfXu2NHzhraGftcv80CloAKKJcjt4-CPmsk/edit","подробная сводка и роли"],
+ ["Черновик регламента (.md)","https://drive.google.com/file/d/1JwykdH5Wx_c5BBpluqD9hinVlB-90Eaz/view","приём, увольнение, чек-лист Светланы, пакет новичка"],
+ ["Zoom 28.09, транскрипт","https://drive.google.com/file/d/13HQ7c-JHSeETgY9Y8sf0Dtx8bpPB_lKg/view","лимиты, анонимизация, план этапа"],
+ ["Zoom 29.09, транскрипт","https://drive.google.com/file/d/12R1E7bcc8TzR0N4l4kfgNpKbKloRCiRY/view","автосубтитры, приём и увольнение"],
+ ["Переписка с Юрием 28–29.09","https://drive.google.com/file/d/1Z6Pzvskd2GwvZ-gmBEI4uxIxekqadlWQ/view","итог Zoom 28.09"],
+ ["Контекст проекта","https://drive.google.com/file/d/19BcWn0X0kV1yqfVPermvo62ptyNRA0NN/view","роли и договорённости"]
+];
+var $=function(id){return document.getElementById(id)};
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* вкладки */
+function show(id){
+  [].forEach.call($("nav").children,function(b){b.setAttribute("aria-selected",b.dataset.v===id?"true":"false")});
+  ["v-over","v-dec","v-task","v-chk","v-files"].forEach(function(v){$(v).hidden=v!==id});
+}
+[].forEach.call($("nav").children,function(b){b.addEventListener("click",function(){show(b.dataset.v)})});
+
+/* карточки-счётчики */
+var decFilter="all",taskFilter="all";
+function kpi(num,label,cls,fn){
+  var b=el("button","kpi "+cls,"<b>"+num+"</b><span>"+label+"</span>");
+  b.addEventListener("click",fn);$("kpis").appendChild(b);
+}
+function buildKpis(){
+  $("kpis").innerHTML="";
+  var open=D.filter(function(x){return x.s==="bad"}).length;
+  var left=T.filter(function(x){return store.get("done-"+x.id)!=="1"}).length;
+  kpi(open,"вопросов не решено","bad",function(){decFilter="bad";renderDec();show("v-dec")});
+  kpi(left,"задач открыто","warn",function(){taskFilter="open";renderTasks();show("v-task")});
+  kpi(C.filter(function(x){return x.s==="bad"}).length,"важных расхождений","bad",function(){show("v-chk");openChk(0)});
+  kpi("7","дней без итога после Zoom","warn",function(){show("v-over")});
+}
+
+/* этапы */
+function renderSteps(){
+  S.forEach(function(s,i){
+    var b=el("button","step "+s.s,"<b>"+esc(s.n)+"</b><span class='pill "+(s.s==="idle"?"":s.s)+"' "+(s.s==="idle"?"style='background:var(--surface2);color:var(--muted)'":"")+">"+s.w+"</span>");
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",function(){
+      [].forEach.call($("steps").children,function(x){x.setAttribute("aria-pressed","false")});
+      b.setAttribute("aria-pressed","true");
+      $("step-detail").innerHTML="<h3>"+esc(s.n)+"</h3><p>"+esc(s.d)+"</p>";
+    });
+    $("steps").appendChild(b);
+    if(i===1)b.click();
+  });
+}
+
+/* раскрывающиеся строки */
+function accordion(host,items,build){
+  host.innerHTML="";
+  items.forEach(function(it){
+    var row=el("div","item");row.dataset.open="false";
+    var head=el("button",null,"<span class='t'>"+build.head(it)+"</span><span class='arrow' aria-hidden='true'>›</span>");
+    head.setAttribute("aria-expanded","false");
+    var det=el("div","detail",build.body(it));det.hidden=true;
+    head.addEventListener("click",function(){
+      var o=row.dataset.open==="true";
+      row.dataset.open=String(!o);head.setAttribute("aria-expanded",String(!o));det.hidden=o;
+    });
+    row.appendChild(head);row.appendChild(det);host.appendChild(row);
+  });
+}
+function chips(host,opts,cur,fn){
+  host.innerHTML="";
+  opts.forEach(function(o){
+    var b=el("button","chip",o[1]);b.setAttribute("aria-pressed",String(cur===o[0]));
+    b.addEventListener("click",function(){fn(o[0])});host.appendChild(b);
+  });
+}
+function renderDec(){
+  chips($("dec-chips"),[["all","Все"],["ok","Решено"],["warn","Спорно"],["bad","Не решено"]],decFilter,function(v){decFilter=v;renderDec()});
+  var list=D.filter(function(x){return decFilter==="all"||x.s===decFilter});
+  accordion($("dec-list"),list,{
+    head:function(x){return esc(x.t)+" <span class='pill "+x.s+"'>"+x.w+"</span>"},
+    body:function(x){return "<p>"+esc(x.d)+"</p><p class='muted'>Источник: "+esc(x.src)+"</p>"}
+  });
+}
+function renderChk(){
+  accordion($("chk-list"),C,{
+    head:function(x){return esc(x.t)+" <span class='pill "+(x.s==="idle"?"info":x.s)+"'>"+x.w+"</span>"},
+    body:function(x){return "<p>"+esc(x.d)+"</p><p><b>Что делать:</b> "+esc(x.do)+"</p>"}
+  });
+}
+function openChk(i){var rows=$("chk-list").children;if(rows[i]&&rows[i].dataset.open!=="true")rows[i].firstChild.click()}
+
+/* задачи */
+function renderTasks(){
+  chips($("task-chips"),[["all","Все"],["open","Открытые"],["done","Выполненные"]],taskFilter,function(v){taskFilter=v;renderTasks()});
+  var host=$("task-list");host.innerHTML="";
+  T.forEach(function(x){
+    var done=store.get("done-"+x.id)==="1";
+    if(taskFilter==="open"&&done)return;
+    if(taskFilter==="done"&&!done)return;
+    var row=el("div","task"+(done?" done":""));
+    var cb=el("input");cb.type="checkbox";cb.id="cb-"+x.id;cb.checked=done;
+    var lb=el("label",null,esc(x.t)+"<div class='who'>"+esc(x.who)+" · <span class='pill "+x.s+"'>"+esc(x.st)+"</span></div>");
+    lb.htmlFor=cb.id;
+    cb.addEventListener("change",function(){store.set("done-"+x.id,cb.checked?"1":"0");renderTasks();buildKpis()});
+    row.appendChild(cb);row.appendChild(lb);host.appendChild(row);
+  });
+  if(!host.children.length)host.appendChild(el("div","pad muted","Здесь пока ничего нет."));
+}
+function renderFiles(){
+  F.forEach(function(f){
+    var li=el("li",null,"<a target='_blank' rel='noopener' href='"+f[1]+"'>"+esc(f[0])+"</a><span class='muted'>"+esc(f[2])+"</span>");
+    $("file-list").appendChild(li);
+  });
+}
+buildKpis();renderSteps();renderDec();renderTasks();renderChk();renderFiles();
+})();
+</script>
+
+</body></html>
